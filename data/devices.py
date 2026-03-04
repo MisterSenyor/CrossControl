@@ -8,3 +8,6 @@ class DeviceDB:
 
     def list_devices(self):
         return list(self.devices.items())
+    
+    def get_ip_from_name(self, name):
+        return self.devices[name]

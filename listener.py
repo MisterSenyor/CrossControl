@@ -1,8 +1,15 @@
 import socket
 from network.main_protocol import *
+from handlers import rc, share
+
+PROTS = {
+    "RC": rc.handle_command,
+    "SHARE": share.handle_command
+}
+LISTENER_PORT = 9999
 
 class IPv6Listener:
-    def __init__(self, host="::", port=9999, buffer_size=4096):
+    def __init__(self, host="::", port=LISTENER_PORT, buffer_size=4096):
         self.host = host
         self.port = port
         self.buffer_size = buffer_size
@@ -47,21 +54,22 @@ class IPv6Listener:
         header = message[:HEADER_SIZE_TOTAL]
         payload = message[HEADER_SIZE_TOTAL:]
 
-        src, dst, proto = parse_header(header)
+        src, dst, prot = parse_header(header)
 
         print("[MESSAGE RECEIVED]")
         print(f"  SRC  : {src}")
         print(f"  DST  : {dst}")
-        print(f"  PROTO: {proto}")
+        print(f"  PROT : {prot}")
         print(f"  DATA : {payload!r}")
 
-        self.dispatch(src, dst, proto, payload)
+        self.dispatch(src, dst, prot, payload)
 
-    def dispatch(self, src, dst, proto, payload):
+    def dispatch(self, src, dst, prot, payload):
         """
         Hook this into your app logic later.
         """
-        print(f"[DISPATCH] {proto} from {src} to {dst}")
+        PROTS[prot](src, dst, payload)
+        
    
     
 def main():

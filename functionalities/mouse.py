@@ -1,7 +1,7 @@
 import socket
 from kivy.uix.tabbedpanel import TabbedPanelItem
 from kivy.uix.button import Button
-from listener import HEADER_SIZES, TERMINATOR
+from listener import HEADER_SIZES, TERMINATOR, LISTENER_PORT
 
 def pad_field(text, size):
     raw = text.encode("utf-8")
@@ -9,7 +9,7 @@ def pad_field(text, size):
 
 
 class MouseDeviceTab(TabbedPanelItem):
-    def __init__(self, device, title, **kwargs):
+    def __init__(self, device: tuple, title, **kwargs):
         super().__init__(text=title, **kwargs)
         self.device = device
         btn = Button(text="Send Command")
@@ -20,10 +20,10 @@ class MouseDeviceTab(TabbedPanelItem):
         print("=== SENDING COMMAND")
         src = "1"
         dst = "2"
-        proto = "SHARE"
-        payload = b"10"
-        ipv6_addr = "fe80::34d7:b2c6:1d56:c68d"
-        port = 9999
+        proto = "RC"
+        payload = b"KPwindows"
+        ipv6_addr = self.device[1]
+        port = LISTENER_PORT
         message = (
             pad_field(src, HEADER_SIZES["src"]) +
             pad_field(dst, HEADER_SIZES["dst"]) +

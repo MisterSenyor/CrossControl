@@ -21,14 +21,14 @@ class DeviceScreen(Screen):
 
         self.add_widget(self.root_layout)
 
-    def set_device(self, device):
-        self.device = device
-        self.header.set_title(device)
+    def set_device(self, name, ip):
+        self.device = (name, ip)
+        self.header.set_title(name)
 
         self.tabs.clear_widgets()
         self.tabs.clear_tabs()
 
-        self.tabs.add_widget(MouseDeviceTab(device, "Test"))
+        self.tabs.add_widget(MouseDeviceTab(self.device, "Test"))
 
     def go_back(self):
         self.manager.transition.direction = 'right'

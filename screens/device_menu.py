@@ -46,6 +46,7 @@ class DeviceMenuScreen(Screen):
             self.device_list.add_widget(btn)
 
     def open_device(self, device_name):
+        self.manager.transition.direction = 'left'
         device_screen = self.manager.get_screen("device_screen")
-        device_screen.set_device(device_name)
+        device_screen.set_device(device_name, self.db.get_ip_from_name(device_name))
         self.manager.current = "device_screen"
