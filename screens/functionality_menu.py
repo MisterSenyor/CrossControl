@@ -23,7 +23,7 @@ class DeviceScreen(Screen):
 
     def set_device(self, device):
         self.device = device
-        self.header.set_title(device.name)
+        self.header.set_title(device)
 
         self.tabs.clear_widgets()
         self.tabs.clear_tabs()

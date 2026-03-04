@@ -1,11 +1,10 @@
-class Device:
-    def __init__(self, name, device_id):
-        self.name = name
-        self.device_id = device_id
+class DeviceDB:
+    def __init__(self):
+        self.devices = {}
 
+    def update_from_sync(self, devices):
+        for d in devices:
+            self.devices[d["name"]] = d["ipv6"]
 
-DEVICES = [
-    Device("Living Room Sensor", "dev_001"),
-    Device("Garage Controller", "dev_002"),
-    Device("Office Monitor", "dev_003"),
-]
+    def list_devices(self):
+        return list(self.devices.items())
