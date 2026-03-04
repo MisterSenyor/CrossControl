@@ -22,6 +22,7 @@ class DeviceMenuScreen(Screen):
         self.add_widget(layout)
 
     def open_device(self, device):
+        self.manager.transition.direction = 'left'
         device_screen = self.manager.get_screen("device_screen")
         device_screen.set_device(device)
         self.manager.current = "device_screen"

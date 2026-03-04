@@ -3,16 +3,17 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.tabbedpanel import TabbedPanel
 
 from widgets.header import DeviceHeader
-from functionalities.mouse import BaseDeviceTab
+from functionalities.mouse import MouseDeviceTab
 
 
 class DeviceScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        self.root_layout = BoxLayout(orientation="vertical")
+        self.root_layout = BoxLayout(orientation="vertical", padding=20, spacing=10)
 
         self.header = DeviceHeader(on_back=self.go_back)
+        # self.tabs = TabbedPanel(do_default_tab=False, tab_pos="left_top")
         self.tabs = TabbedPanel(do_default_tab=False)
 
         self.root_layout.add_widget(self.header)
@@ -25,8 +26,10 @@ class DeviceScreen(Screen):
         self.header.set_title(device.name)
 
         self.tabs.clear_widgets()
+        self.tabs.clear_tabs()
 
-        self.tabs.add_widget(BaseDeviceTab(device, "Test"))
+        self.tabs.add_widget(MouseDeviceTab(device, "Test"))
 
     def go_back(self):
+        self.manager.transition.direction = 'right'
         self.manager.current = "device_menu"
