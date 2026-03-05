@@ -3,7 +3,8 @@ from network.main_protocol import *
 from handlers import rc, share
 
 PROTS = {
-    "RC": rc.handle_command,
+    "MOUSE": rc.handle_mouse,
+    "KEYBOARD": rc.handle_keyboard,
     "SHARE": share.handle_command
 }
 LISTENER_PORT = 9999
@@ -17,7 +18,7 @@ class IPv6Listener:
     def start(self):
         with socket.socket(socket.AF_INET6, socket.SOCK_STREAM) as server:
             server.bind((self.host, self.port))
-            server.listen(5)
+            server.listen(10)
 
             print(f"[LISTENER] Listening on [{self.host}]:{self.port}")
 

@@ -21,6 +21,7 @@ class CoordinationServer:
 
             while True:
                 conn, addr = server.accept()
+                print(f"=== NEW CONNECTION {addr}")
                 with conn:
                     self.handle_connection(conn, addr)
 

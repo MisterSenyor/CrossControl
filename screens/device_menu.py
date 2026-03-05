@@ -29,9 +29,9 @@ class DeviceMenuScreen(Screen):
 
     def sync(self, _):
         result = sync_with_server(
-            server_ipv6="fe80::34d7:b2c6:1d56:c68d",
+            server_ipv6="2a02:6680:210c:2b69:d8f4:79dc:b37e:3aaf",
             port=SERVER_PORT,
-            my_device_name="Controller"
+            my_device_name="MINHA"
         )
 
         self.db.update_from_sync(result["devices"])

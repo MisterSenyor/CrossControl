@@ -1,32 +1,38 @@
-import pyautogui, keyboard, socket
+import pyautogui, keyboard
 
 pyautogui.FAILSAFE = False
 
-def handle_command(src, dst, msg):
+def handle_mouse(src, dst, msg):
+
     try:
         msg = msg.decode('utf-8')
-        device_type = msg[0]
-        mode = msg[1]
-        if device_type == "M":
-            # position in format xxxx yyyy (for example 05000400 for x=500, y=400)
-            x = int(msg[2:6])
-            y = int(msg[6:10])
-            pos = (x, y)
+        mode = msg[0]
 
-            if mode == 'M':
-                pyautogui.moveTo(pos)
-            elif mode == 'L':
-                pyautogui.click(pos, button='left')
-            elif mode == 'R':
-                pyautogui.click(pos, button='right')
-            elif mode == 'D':
-                pyautogui.dragTo(pos)
+        # position in format xxxx yyyy (for example 05000400 for x=500, y=400)
+        # position in format xxxx yyyy (for example 05000400 for x=500, y=400)
+        x = int(msg[1:5])
+        y = int(msg[5:9])
+        pos = (x, y)
 
-        elif device_type == "K":
-            data = msg[2:]
-            if mode == 'W':
-                keyboard.write(data)
-            elif mode == 'P':
-                keyboard.press_and_release(data)
-    except Exception as e:
-        print(f"RAN INTO EXCEPTION: {e}")
+        if mode == 'M':
+            pyautogui.moveTo(pos)
+        elif mode == 'L':
+            pyautogui.click(pos, button='left')
+        elif mode == 'R':
+            pyautogui.click(pos, button='right')
+    except:
+        pass
+
+
+def handle_keyboard(src, dst, msg):
+    try:
+        msg = msg.decode('utf-8')
+        mode = msg[0]
+        data = msg[1:]
+
+        if mode == 'W':
+            keyboard.write(data)
+        elif mode == 'P':
+            keyboard.press_and_release(data)
+    except:
+        pass
